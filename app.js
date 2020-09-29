@@ -52,6 +52,7 @@ addPhraseToDisplay(phraseArray);
 const checkLetter = button => {
   // select all elements with class of letter
   let phraseListItems = ul.children;
+  let correct = null;
   // loop over letters on the display
   for (i = 0; i < phraseListItems.length; i++) {
     const letter = phraseListItems[i].textContent.toLowerCase();
@@ -59,10 +60,10 @@ const checkLetter = button => {
     if (button.textContent === letter) {
       //add class named show to the letters element
       phraseListItems[i].classList.add("show");
-    } else {
-      return null;
+      correct = true;
     }
   }
+  return correct;
 }
 
 checkLetter(qwerty);
