@@ -78,12 +78,41 @@ qwerty.addEventListener('click', e => {
     const match = checkLetter(e.target);
     // If the checkLetter function does not find a letter, remove one of the heart images and increment the missed counter
     if (!match) {
-      const attempts = document.querySelectorAll('.attempts');
-      attempts[missed].style.display = 'none';
+      const tries = document.querySelectorAll('.tries');
+      tries[missed].style.display = 'none';
       missed++;
     }
-    if(e.target) {
+    if (e.target) {
       return checkWin(e.target);
     }
   }
 });
+
+// Check win function
+const checkWin = (e) => {
+// Create a variable to store the li elements that have the class name “letter”
+  let storeLetter = ul.getElementsByClassName('letter');
+  // Create a variable to store the li elements that have the class name “show”
+  let showPhrase = ul.getElementsByClassName('show');
+  // Check if the length of the 2 variables are the same. If they are, display the win overlay
+  if (storeLetter.length === showPhrase.length) {
+  // Create the win overlay by adding the “win” class to the start overlay.
+  overlay.classList.add('win');
+  // Change the headline text of the start overlay to show a person won.
+  overlay.querySelector('h2').textContent = "Congratulations! You've won!";
+  // Change the display property of the overlay to “flex”
+  overlay.style.display = 'flex';
+  }
+  // Check if the missed counter is greater than 4. If they are, display the lose overlay
+  if (missed > 4) {
+  // Create the lose overlay by adding the “lose” class to the start overlay.
+  overlay.classList.add('lose');
+  // Change the headline text of the start overlay to show a person lost.
+  overlay.querySelector('h2').textContent = "Sorry, You've lost :(";
+  // Change the display property of the overlay to “flex”
+  overlay.style.display = 'flex';
+  // reset button should appear after checkWin
+  overlay.querySelector('a').textContent = 'Play Again?';
+  resetGame();
+  }
+}
