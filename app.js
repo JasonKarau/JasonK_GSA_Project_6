@@ -45,3 +45,45 @@ const addPhraseToDisplay = arr => {
 
 const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
+
+// Check if letter is clicked = match to phrase, if not return null
+
+// define function with paramater of button
+const checkLetter = button => {
+  // select all elements with class of letter
+  let phraseListItems = ul.children;
+  // loop over letters on the display
+  for (i = 0; i < phraseListItems.length; i++) {
+    const letter = phraseListItems[i].textContent.toLowerCase();
+    // IF letters match button passed in
+    if (button.textContent === letter) {
+      //add class named show to the letters element
+      phraseListItems[i].classList.add("show");
+    } else {
+      return null;
+    }
+  }
+}
+
+checkLetter(qwerty);
+
+// Onscreen keyboard click addEventListener
+qwerty.addEventListener('click', e => {
+  // If click on button is a click off the buttons or already has the chosen class, clear them out
+  if (e.target.tagName === 'BUTTON') {
+    // Add the “chosen” class to the button that was pressed.
+    e.target.classList.add('chosen');
+    e.target.setAttribute('disabled', true);
+    // Call the checkLetter function and store the results in a variable.
+    const match = checkLetter(e.target);
+    // If the checkLetter function does not find a letter, remove one of the heart images and increment the missed counter
+    if (!match) {
+      const attempts = document.querySelectorAll('.attempts');
+      attempts[missed].style.display = 'none';
+      missed++;
+    }
+    if(e.target) {
+      return checkWin(e.target);
+    }
+  }
+});
