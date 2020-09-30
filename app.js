@@ -103,6 +103,8 @@ const checkWin = (e) => {
   overlay.querySelector('h2').textContent = "Congratulations! You've won!";
   // Change the display property of the overlay to “flex”
   overlay.style.display = 'flex';
+  overlay.querySelector('a').textContent = 'Play Again!';
+     resetGame();
   }
   // Check if the missed counter is greater than 4. If they are, display the lose overlay
   if (missed > 4) {
@@ -116,4 +118,25 @@ const checkWin = (e) => {
   overlay.querySelector('a').textContent = 'Play Again?';
   resetGame();
   }
+}
+
+function resetGame() {
+  // reset on screen keyboard and clear previously selected letters
+  let keyboardButton = document.querySelectorAll('.keyrow button');
+  // loop through keyboard as an empty string to reset
+  for (let i = 0; i < keyboardButton.length; i++) {
+        keyboardButton[i].className = '';
+        keyboardButton[i].disabled = false;
+    }
+    ul.innerHTML = '';
+    // call a random phrase on reset
+    addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+    // reset hearts
+    const liveHeart = document.getElementsByTagName('img');
+    for (let i = 0; i < liveHeart.length; i++) {
+      let tries = document.querySelectorAll('.tries');
+      tries[i].style.display = 'inline';
+    }
+    // reset missed
+    missed = 0;
 }
